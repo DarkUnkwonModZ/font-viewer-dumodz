@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DUModz Font Viewer PRO - Ultimate Edition</title>
+    <!-- Google Fonts for UI -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Hind+Siliguri:wght@300;500;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    
+    <style>
+        :root {
+            --primary: #8b5cf6;
+            --primary-dark: #6d28d9;
+            --accent: #10b981;
+            --bg: #0f172a;
+            --card-bg: rgba(30, 41, 59, 0.7);
+            --text-main: #f8fafc;
+            --text-dim: #94a3b8;
+            --glass: rgba(255, 255, 255, 0.03);
+            --border: rgba(255, 255, 255, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', 'Hind Siliguri', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: var(--bg);
+            background-image: radial-gradient(circle at 50% 50%, #1e1b4b 0%, #0f172a 100%);
+            color: var(--text-main);
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* --- Welcome Screen --- */
+        #upload-screen {
+            position: fixed;
+            inset: 0;
+            z-index: 1000;
+            background: var(--bg);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            transition: 0.5s ease;
+        }
+
+        .dumodz-brand {
+            font-size: 3.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #a78bfa, #f472b6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+            letter-spacing: -2px;
+        }
+
+        .upload-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border: 2px dashed var(--border);
+            border-radius: 24px;
+            padding: 40px;
+            text-align: center;
+            width: 100%;
+            max-width: 450px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .upload-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-5px);
+            background: rgba(99, 102, 241, 0.1);
+        }
+
+        /* --- Main UI Layout --- */
+        header {
+            height: 70px;
+            padding: 0 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid var(--border);
+            z-index: 100;
+        }
+
+        .main-container {
+            flex: 1;
+            display: flex;
+            flex-direction: row;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* --- Sidebar (Controls) --- */
+        .sidebar {
+            width: 340px;
+            background: var(--card-bg);
+            backdrop-filter: blur(20px);
+            border-right: 1px solid var(--border);
+            padding: 25px;
+            overflow-y: auto;
+            transition: transform 0.3s ease;
+        }
+
+        /* --- Viewer Area --- */
+        .viewer-area {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            padding: 30px;
+            overflow-y: auto;
+            align-items: center;
+        }
+
+        .canvas-container {
+            width: 100%;
+            max-width: 900px;
+            min-height: 400px;
+            background: #fff; /* Default for preview */
+            border-radius: 16px;
+            padding: 40px;
+            color: #000;
+            position: relative;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            outline: none;
+            transition: 0.3s;
+        }
+
+        /* --- Custom Controls UI --- */
+        .control-block { margin-bottom: 24px; }
+        .control-label {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.85rem;
+            color: var(--text-dim);
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        input[type="range"] {
+            width: 100%;
+            height: 6px;
+            background: #334155;
+            border-radius: 10px;
+            appearance: none;
+            cursor: pointer;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            appearance: none;
+            width: 18px;
+            height: 18px;
+            background: var(--primary);
+            border-radius: 50%;
+            border: 3px solid #fff;
+        }
+
+        .btn-group {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .action-btn {
+            background: var(--glass);
+            border: 1px solid var(--border);
+            color: white;
+            padding: 12px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: 0.2s;
+        }
+
+        .action-btn:hover { background: var(--primary); border-color: var(--primary); }
+
+        .export-btn {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            width: 100%;
+            padding: 15px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border: none;
+            margin-top: 10px;
+        }
+
+        /* --- Mobile Optimization (768px) --- */
+        @media (max-width: 768px) {
+            .main-container { flex-direction: column; }
+            .sidebar {
+                width: 100%;
+                height: 50%;
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                z-index: 200;
+                border-right: none;
+                border-top: 2px solid var(--primary);
+                transform: translateY(100%); /* Hidden by default on mobile */
+            }
+            .sidebar.active { transform: translateY(0); }
+            .viewer-area { padding: 15px; padding-bottom: 100px; }
+            .canvas-container { padding: 20px; font-size: 24px !important; }
+            
+            .mobile-nav {
+                display: flex !important;
+                position: fixed;
+                bottom: 20px;
+                left: 50%;
+                transform: translateX(-50%);
+                background: var(--primary);
+                padding: 12px 25px;
+                border-radius: 50px;
+                box-shadow: 0 10px 20px rgba(0,0,0,0.4);
+                z-index: 300;
+                gap: 15px;
+                font-weight: bold;
+            }
+        }
+
+        .mobile-nav { display: none; }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 10px; }
+
+    </style>
+</head>
+<body>
+
+    <!-- Upload Screen -->
+    <div id="upload-screen">
+        <div class="dumodz-brand">DUModz PRO</div>
+        <p style="color: var(--text-dim); margin-bottom: 30px;">Professional Unicode Font Viewer & Renderer</p>
+        <div class="upload-card" onclick="document.getElementById('fInp').click()">
+            <svg style="width: 50px; height: 50px; margin-bottom: 15px; fill: var(--primary);" viewBox="0 0 24 24"><path d="M14,2L20,8V20A2,2 0 0,1 18,22H6A2,2 0 0,1 4,20V4A2,2 0 0,1 6,2H14M18,20V9H13V4H6V20H18M12,12L16,16H13.5V19H10.5V16H8L12,12Z"/></svg>
+            <h3>ফন্ট ফাইল সিলেক্ট করুন</h3>
+            <p style="font-size: 0.8rem; margin-top: 8px;">TTF, OTF, WOFF supported</p>
+            <input type="file" id="fInp" accept=".ttf,.otf,.woff" hidden>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header>
+        <div style="font-weight: 800; font-size: 1.4rem; color: var(--primary);">DUModz <span style="color:white; font-weight:300;">PRO</span></div>
+        <div id="font-name-display" style="font-size: 0.8rem; background: var(--glass); padding: 5px 12px; border-radius: 20px; border: 1px solid var(--border);">No Font Loaded</div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="main-container">
+        <!-- Sidebar Controls -->
+        <div class="sidebar" id="sidebar">
+            <h3 style="margin-bottom: 20px; font-size: 1.1rem; border-left: 4px solid var(--primary); padding-left: 10px;">Typography Settings</h3>
+            
+            <div class="control-block">
+                <div class="control-label">Font Size <span id="szL">50px</span></div>
+                <input type="range" id="szInp" min="16" max="250" value="50">
+            </div>
+
+            <div class="control-block">
+                <div class="control-label">Line Height <span id="lhL">1.2</span></div>
+                <input type="range" id="lhInp" min="0.5" max="3" step="0.1" value="1.2">
+            </div>
+
+            <div class="control-block">
+                <div class="control-label">Letter Spacing <span id="lsL">0px</span></div>
+                <input type="range" id="lsInp" min="-5" max="50" value="0">
+            </div>
+
+            <div class="control-block">
+                <div class="control-label">Colors</div>
+                <div class="btn-group">
+                    <input type="color" id="fgCol" value="#000000" style="width:100%; height:40px; border:none; background:none; cursor:pointer;">
+                    <input type="color" id="bgCol" value="#ffffff" style="width:100%; height:40px; border:none; background:none; cursor:pointer;">
+                </div>
+                <div style="display:flex; justify-content: space-between; font-size: 0.7rem; margin-top:5px;">
+                    <span>Text Color</span>
+                    <span>Background</span>
+                </div>
+            </div>
+
+            <div class="control-block">
+                <div class="control-label">Presets</div>
+                <div class="btn-group">
+                    <button class="action-btn" onclick="setPreset('bn')">বাংলা</button>
+                    <button class="action-btn" onclick="setPreset('en')">English</button>
+                </div>
+            </div>
+
+            <div class="control-block">
+                <div class="control-label">Export Image</div>
+                <button class="action-btn export-btn" onclick="exportImg('png')">Download PNG</button>
+                <button class="action-btn export-btn" style="background: var(--accent); margin-top:8px;" onclick="exportImg('jpg')">Download JPG</button>
+            </div>
+
+            <button class="action-btn" style="width:100%; margin-top: 10px; color: #f87171;" onclick="location.reload()">Reset All</button>
+        </div>
+
+        <!-- Viewer Area -->
+        <div class="viewer-area">
+            <div id="capture-area" class="canvas-container" contenteditable="true" spellcheck="false">
+                DUModz Professional Font Viewer. 
+                এখানে আপনার টেক্সট লিখুন এবং ফন্টটি পরীক্ষা করুন।
+            </div>
+            <p style="margin-top: 20px; color: var(--text-dim); font-size: 0.8rem;">* This area is editable. Type anything!</p>
+        </div>
+    </div>
+
+    <!-- Mobile Nav Toggle -->
+    <div class="mobile-nav" onclick="toggleMobileSidebar()">
+        SETTINGS / CONTROLS
+    </div>
+
+    <script>
+        const fInp = document.getElementById('fInp');
+        const captureArea = document.getElementById('capture-area');
+        const sidebar = document.getElementById('sidebar');
+
+        // Font Loading Logic
+        fInp.addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    const fontFace = new FontFace('UserFont', event.target.result);
+                    fontFace.load().then(loaded => {
+                        document.fonts.add(loaded);
+                        captureArea.style.fontFamily = 'UserFont';
+                        document.getElementById('font-name-display').innerText = file.name;
+                        document.getElementById('upload-screen').style.opacity = '0';
+                        setTimeout(() => {
+                            document.getElementById('upload-screen').style.display = 'none';
+                        }, 500);
+                    });
+                };
+                reader.readAsArrayBuffer(file);
+            }
+        });
+
+        // Dynamic Controls Logic
+        function updateStyle(id, prop, unit = '') {
+            const el = document.getElementById(id);
+            const label = document.getElementById(id.replace('Inp', 'L'));
+            el.addEventListener('input', (e) => {
+                captureArea.style[prop] = e.target.value + unit;
+                if(label) label.innerText = e.target.value + unit;
+            });
+        }
+
+        updateStyle('szInp', 'fontSize', 'px');
+        updateStyle('lhInp', 'lineHeight', '');
+        updateStyle('lsInp', 'letterSpacing', 'px');
+
+        document.getElementById('fgCol').addEventListener('input', (e) => {
+            captureArea.style.color = e.target.value;
+        });
+
+        document.getElementById('bgCol').addEventListener('input', (e) => {
+            captureArea.style.background = e.target.value;
+        });
+
+        // Presets
+        function setPreset(lang) {
+            if(lang === 'bn') {
+                captureArea.innerText = "আমার সোনার বাংলা, আমি তোমায় ভালোবাসি। চিরদিন তোমার আকাশ, তোমার বাতাস, আমার প্রাণে বাজায় বাঁশি।";
+            } else {
+                captureArea.innerText = "The quick brown fox jumps over the lazy dog. 1234567890 !@#$%^&*()";
+            }
+        }
+
+        // Image Export Logic (html2canvas)
+        function exportImg(format) {
+            html2canvas(captureArea, {
+                backgroundColor: captureArea.style.background || "#ffffff",
+                scale: 2 // High Quality
+            }).then(canvas => {
+                const link = document.createElement('a');
+                link.download = `DUModz-Font-Export.${format}`;
+                link.href = canvas.toDataURL(`image/${format === 'jpg' ? 'jpeg' : 'png'}`);
+                link.click();
+            });
+        }
+
+        // Mobile Toggle
+        let sidebarOpen = false;
+        function toggleMobileSidebar() {
+            sidebarOpen = !sidebarOpen;
+            sidebar.classList.toggle('active', sidebarOpen);
+            document.querySelector('.mobile-nav').innerText = sidebarOpen ? "CLOSE SETTINGS" : "SETTINGS / CONTROLS";
+        }
+    </script>
+</body>
+</html>
