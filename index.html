@@ -2,408 +2,439 @@
 <html lang="bn">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DUModz Font Viewer PRO - Ultimate Edition</title>
-    <!-- Google Fonts for UI -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Hind+Siliguri:wght@300;500;700&display=swap" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>DUModz Font Viewer - Ultra Advanced</title>
     
+    <!-- Libraries -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=Hind+Siliguri:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
     <style>
         :root {
-            --primary: #8b5cf6;
-            --primary-dark: #6d28d9;
-            --accent: #10b981;
-            --bg: #0f172a;
-            --card-bg: rgba(30, 41, 59, 0.7);
-            --text-main: #f8fafc;
-            --text-dim: #94a3b8;
-            --glass: rgba(255, 255, 255, 0.03);
+            --primary: #c084fc;
+            --secondary: #22d3ee;
+            --accent: #fbbf24;
+            --bg-dark: #020617;
+            --panel-bg: rgba(15, 23, 42, 0.9);
+            --glass: rgba(255, 255, 255, 0.05);
             --border: rgba(255, 255, 255, 0.1);
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Inter', 'Hind Siliguri', sans-serif;
-            -webkit-tap-highlight-color: transparent;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', 'Hind Siliguri', sans-serif; }
 
         body {
-            background-color: var(--bg);
-            background-image: radial-gradient(circle at 50% 50%, #1e1b4b 0%, #0f172a 100%);
-            color: var(--text-main);
+            background-color: var(--bg-dark);
+            background-image: radial-gradient(at 0% 0%, hsla(253,16%,7%,1) 0, transparent 50%), 
+                              radial-gradient(at 50% 0%, hsla(225,39%,30%,1) 0, transparent 50%);
+            color: #fff;
             height: 100vh;
-            overflow: hidden;
             display: flex;
             flex-direction: column;
+            overflow: hidden;
         }
 
-        /* --- Welcome Screen --- */
-        #upload-screen {
+        /* --- 100% Perfect Loading Screen --- */
+        #welcome-screen {
             position: fixed;
             inset: 0;
-            z-index: 1000;
-            background: var(--bg);
+            z-index: 9999;
+            background: #020617;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            padding: 20px;
-            transition: 0.5s ease;
+            transition: 0.6s cubic-bezier(0.7, 0, 0.3, 1);
         }
 
-        .dumodz-brand {
+        .logo-anim {
             font-size: 3.5rem;
-            font-weight: 800;
-            background: linear-gradient(135deg, #a78bfa, #f472b6);
+            font-weight: 900;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            margin-bottom: 10px;
-            letter-spacing: -2px;
+            filter: drop-shadow(0 0 15px rgba(192, 132, 252, 0.4));
+            animation: pulse 2s infinite;
         }
 
-        .upload-card {
-            background: var(--card-bg);
-            backdrop-filter: blur(10px);
-            border: 2px dashed var(--border);
-            border-radius: 24px;
-            padding: 40px;
-            text-align: center;
-            width: 100%;
-            max-width: 450px;
+        @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
+
+        .upload-btn {
+            margin-top: 30px;
+            padding: 15px 40px;
+            background: linear-gradient(45deg, #6366f1, #a855f7);
+            border: none;
+            border-radius: 50px;
+            color: white;
+            font-weight: bold;
             cursor: pointer;
-            transition: 0.3s;
+            box-shadow: 0 10px 20px rgba(99, 102, 241, 0.3);
         }
 
-        .upload-card:hover {
-            border-color: var(--primary);
-            transform: translateY(-5px);
-            background: rgba(99, 102, 241, 0.1);
-        }
-
-        /* --- Main UI Layout --- */
+        /* --- Header --- */
         header {
-            height: 70px;
-            padding: 0 20px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            background: rgba(15, 23, 42, 0.8);
-            backdrop-filter: blur(15px);
+            padding: 15px 25px;
+            background: var(--panel-bg);
+            backdrop-filter: blur(10px);
             border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             z-index: 100;
         }
 
-        .main-container {
+        .header-brand { font-weight: 900; font-size: 1.5rem; letter-spacing: -1px; }
+        .header-brand span { color: var(--secondary); }
+
+        /* --- Main Layout --- */
+        .app-container {
             flex: 1;
             display: flex;
-            flex-direction: row;
             overflow: hidden;
             position: relative;
         }
 
-        /* --- Sidebar (Controls) --- */
-        .sidebar {
-            width: 340px;
-            background: var(--card-bg);
-            backdrop-filter: blur(20px);
-            border-right: 1px solid var(--border);
-            padding: 25px;
-            overflow-y: auto;
-            transition: transform 0.3s ease;
-        }
-
-        /* --- Viewer Area --- */
-        .viewer-area {
+        /* --- Editor Surface (Canvas) --- */
+        .editor-container {
             flex: 1;
-            display: flex;
-            flex-direction: column;
-            padding: 30px;
-            overflow-y: auto;
-            align-items: center;
-        }
-
-        .canvas-container {
-            width: 100%;
-            max-width: 900px;
-            min-height: 400px;
-            background: #fff; /* Default for preview */
-            border-radius: 16px;
-            padding: 40px;
-            color: #000;
-            position: relative;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-            outline: none;
-            transition: 0.3s;
-        }
-
-        /* --- Custom Controls UI --- */
-        .control-block { margin-bottom: 24px; }
-        .control-label {
-            display: flex;
-            justify-content: space-between;
-            font-size: 0.85rem;
-            color: var(--text-dim);
-            margin-bottom: 8px;
-            font-weight: 600;
-        }
-
-        input[type="range"] {
-            width: 100%;
-            height: 6px;
-            background: #334155;
-            border-radius: 10px;
-            appearance: none;
-            cursor: pointer;
-        }
-
-        input[type="range"]::-webkit-slider-thumb {
-            appearance: none;
-            width: 18px;
-            height: 18px;
-            background: var(--primary);
-            border-radius: 50%;
-            border: 3px solid #fff;
-        }
-
-        .btn-group {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-        }
-
-        .action-btn {
-            background: var(--glass);
-            border: 1px solid var(--border);
-            color: white;
-            padding: 12px;
-            border-radius: 12px;
-            cursor: pointer;
-            font-size: 0.9rem;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 8px;
-            transition: 0.2s;
+            padding: 40px;
+            overflow: auto;
+            background: url('https://www.transparenttextures.com/patterns/carbon-fibre.png');
         }
 
-        .action-btn:hover { background: var(--primary); border-color: var(--primary); }
-
-        .export-btn {
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+        #artboard {
+            min-width: 320px;
             width: 100%;
-            padding: 15px;
-            font-weight: bold;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            border: none;
-            margin-top: 10px;
+            max-width: 900px;
+            min-height: 400px;
+            background: #ffffff;
+            color: #000;
+            border-radius: 20px;
+            padding: 60px 40px;
+            font-size: 50px;
+            outline: none;
+            box-shadow: 0 40px 100px rgba(0,0,0,0.8);
+            position: relative;
+            word-wrap: break-word;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
         }
 
-        /* --- Mobile Optimization (768px) --- */
+        /* --- Sidebar Controls --- */
+        .controls-panel {
+            width: 380px;
+            background: var(--panel-bg);
+            backdrop-filter: blur(20px);
+            border-left: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            z-index: 200;
+            transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* --- Tabs --- */
+        .tabs {
+            display: flex;
+            background: rgba(0,0,0,0.3);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .tab {
+            flex: 1;
+            padding: 15px;
+            text-align: center;
+            font-size: 0.8rem;
+            font-weight: bold;
+            cursor: pointer;
+            opacity: 0.5;
+            transition: 0.3s;
+        }
+
+        .tab.active { opacity: 1; border-bottom: 2px solid var(--secondary); background: var(--glass); }
+
+        .tab-content { padding: 25px; overflow-y: auto; flex: 1; display: none; }
+        .tab-content.active { display: block; }
+
+        /* --- UI Elements --- */
+        .control-group { margin-bottom: 20px; }
+        .control-group label { display: flex; justify-content: space-between; font-size: 0.8rem; color: #94a3b8; margin-bottom: 10px; }
+        
+        input[type="range"] { width: 100%; height: 5px; accent-color: var(--secondary); }
+        
+        .color-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+        .color-btn { 
+            height: 45px; width: 100%; border-radius: 10px; border: 1px solid var(--border); 
+            background: var(--glass); cursor: pointer; display: flex; align-items: center; justify-content: center;
+        }
+
+        .action-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .btn-main {
+            padding: 12px; border-radius: 10px; border: none; background: var(--glass);
+            color: white; cursor: pointer; font-weight: bold; transition: 0.3s; font-size: 0.8rem;
+        }
+        .btn-main:hover { background: var(--primary); transform: translateY(-2px); }
+        .btn-export { background: linear-gradient(45deg, var(--primary), var(--secondary)); margin-top: 10px; }
+
+        /* --- Mobile Responsiveness (768px) --- */
         @media (max-width: 768px) {
-            .main-container { flex-direction: column; }
-            .sidebar {
-                width: 100%;
-                height: 50%;
+            .app-container { flex-direction: column; }
+            .controls-panel {
                 position: fixed;
                 bottom: 0;
                 left: 0;
-                z-index: 200;
-                border-right: none;
-                border-top: 2px solid var(--primary);
-                transform: translateY(100%); /* Hidden by default on mobile */
+                width: 100%;
+                height: 60vh;
+                border-left: none;
+                border-top: 2px solid var(--secondary);
+                border-radius: 30px 30px 0 0;
+                transform: translateY(100%);
             }
-            .sidebar.active { transform: translateY(0); }
-            .viewer-area { padding: 15px; padding-bottom: 100px; }
-            .canvas-container { padding: 20px; font-size: 24px !important; }
+            .controls-panel.open { transform: translateY(0); }
+            .editor-container { padding: 20px; padding-bottom: 100px; }
+            #artboard { font-size: 35px; padding: 40px 20px; min-height: 250px; }
             
-            .mobile-nav {
+            .mobile-fab {
                 display: flex !important;
                 position: fixed;
                 bottom: 20px;
-                left: 50%;
-                transform: translateX(-50%);
-                background: var(--primary);
-                padding: 12px 25px;
-                border-radius: 50px;
-                box-shadow: 0 10px 20px rgba(0,0,0,0.4);
-                z-index: 300;
-                gap: 15px;
-                font-weight: bold;
+                right: 20px;
+                width: 60px;
+                height: 60px;
+                background: var(--secondary);
+                border-radius: 50%;
+                justify-content: center;
+                align-items: center;
+                box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+                z-index: 1000;
+                border: none;
+                font-size: 1.5rem;
+                color: #000;
             }
+            .sidebar-overlay {
+                display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.7); z-index: 150;
+            }
+            .sidebar-overlay.active { display: block; }
         }
 
-        .mobile-nav { display: none; }
+        .mobile-fab { display: none; }
 
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar { width: 6px; }
+        /* Scrollbar Fix */
+        ::-webkit-scrollbar { width: 5px; }
         ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 10px; }
 
     </style>
 </head>
 <body>
 
-    <!-- Upload Screen -->
-    <div id="upload-screen">
-        <div class="dumodz-brand">DUModz PRO</div>
-        <p style="color: var(--text-dim); margin-bottom: 30px;">Professional Unicode Font Viewer & Renderer</p>
-        <div class="upload-card" onclick="document.getElementById('fInp').click()">
-            <svg style="width: 50px; height: 50px; margin-bottom: 15px; fill: var(--primary);" viewBox="0 0 24 24"><path d="M14,2L20,8V20A2,2 0 0,1 18,22H6A2,2 0 0,1 4,20V4A2,2 0 0,1 6,2H14M18,20V9H13V4H6V20H18M12,12L16,16H13.5V19H10.5V16H8L12,12Z"/></svg>
-            <h3>ফন্ট ফাইল সিলেক্ট করুন</h3>
-            <p style="font-size: 0.8rem; margin-top: 8px;">TTF, OTF, WOFF supported</p>
-            <input type="file" id="fInp" accept=".ttf,.otf,.woff" hidden>
-        </div>
+    <!-- Loading/Upload Screen -->
+    <div id="welcome-screen">
+        <div class="logo-anim">DUModz PRO</div>
+        <p style="opacity: 0.6; margin-top: 5px;">Modern Unicode Font Rendering Engine</p>
+        <button class="upload-btn" onclick="document.getElementById('fontFile').click()">CHOOSE FONT FILE</button>
+        <input type="file" id="fontFile" accept=".ttf,.otf,.woff" hidden>
     </div>
 
-    <!-- Header -->
+    <!-- App Header -->
     <header>
-        <div style="font-weight: 800; font-size: 1.4rem; color: var(--primary);">DUModz <span style="color:white; font-weight:300;">PRO</span></div>
-        <div id="font-name-display" style="font-size: 0.8rem; background: var(--glass); padding: 5px 12px; border-radius: 20px; border: 1px solid var(--border);">No Font Loaded</div>
+        <div class="header-brand">DUModz <span>PREMIUM</span></div>
+        <div id="fontBadge" style="font-size: 0.7rem; background: var(--glass); padding: 5px 12px; border-radius: 20px; display: none;">No Font Loaded</div>
     </header>
 
-    <!-- Main Content -->
-    <div class="main-container">
-        <!-- Sidebar Controls -->
-        <div class="sidebar" id="sidebar">
-            <h3 style="margin-bottom: 20px; font-size: 1.1rem; border-left: 4px solid var(--primary); padding-left: 10px;">Typography Settings</h3>
-            
-            <div class="control-block">
-                <div class="control-label">Font Size <span id="szL">50px</span></div>
-                <input type="range" id="szInp" min="16" max="250" value="50">
-            </div>
+    <div class="app-container">
+        <div class="sidebar-overlay" id="overlay" onclick="toggleSidebar()"></div>
 
-            <div class="control-block">
-                <div class="control-label">Line Height <span id="lhL">1.2</span></div>
-                <input type="range" id="lhInp" min="0.5" max="3" step="0.1" value="1.2">
+        <!-- Canvas Area -->
+        <div class="editor-container">
+            <div id="artboard" contenteditable="true" spellcheck="false">
+                DUModz Professional Engine
+                সব ফিচার ১০০% কার্যকরী।
             </div>
-
-            <div class="control-block">
-                <div class="control-label">Letter Spacing <span id="lsL">0px</span></div>
-                <input type="range" id="lsInp" min="-5" max="50" value="0">
-            </div>
-
-            <div class="control-block">
-                <div class="control-label">Colors</div>
-                <div class="btn-group">
-                    <input type="color" id="fgCol" value="#000000" style="width:100%; height:40px; border:none; background:none; cursor:pointer;">
-                    <input type="color" id="bgCol" value="#ffffff" style="width:100%; height:40px; border:none; background:none; cursor:pointer;">
-                </div>
-                <div style="display:flex; justify-content: space-between; font-size: 0.7rem; margin-top:5px;">
-                    <span>Text Color</span>
-                    <span>Background</span>
-                </div>
-            </div>
-
-            <div class="control-block">
-                <div class="control-label">Presets</div>
-                <div class="btn-group">
-                    <button class="action-btn" onclick="setPreset('bn')">বাংলা</button>
-                    <button class="action-btn" onclick="setPreset('en')">English</button>
-                </div>
-            </div>
-
-            <div class="control-block">
-                <div class="control-label">Export Image</div>
-                <button class="action-btn export-btn" onclick="exportImg('png')">Download PNG</button>
-                <button class="action-btn export-btn" style="background: var(--accent); margin-top:8px;" onclick="exportImg('jpg')">Download JPG</button>
-            </div>
-
-            <button class="action-btn" style="width:100%; margin-top: 10px; color: #f87171;" onclick="location.reload()">Reset All</button>
         </div>
 
-        <!-- Viewer Area -->
-        <div class="viewer-area">
-            <div id="capture-area" class="canvas-container" contenteditable="true" spellcheck="false">
-                DUModz Professional Font Viewer. 
-                এখানে আপনার টেক্সট লিখুন এবং ফন্টটি পরীক্ষা করুন।
+        <!-- Controls Area -->
+        <div class="controls-panel" id="sidebar">
+            <div class="tabs">
+                <div class="tab active" onclick="openTab(event, 'typo')">TYPOGRAPHY</div>
+                <div class="tab" onclick="openTab(event, 'style')">STYLE & BG</div>
+                <div class="tab" onclick="openTab(event, 'export')">EXPORT</div>
             </div>
-            <p style="margin-top: 20px; color: var(--text-dim); font-size: 0.8rem;">* This area is editable. Type anything!</p>
+
+            <!-- Tab 1: Typography -->
+            <div id="typo" class="tab-content active">
+                <div class="control-group">
+                    <label>Font Size <b id="lbl-size">50px</b></label>
+                    <input type="range" id="inp-size" min="10" max="300" value="50">
+                </div>
+                <div class="control-group">
+                    <label>Line Height <b id="lbl-height">1.2</b></label>
+                    <input type="range" id="inp-height" min="0.5" max="3" step="0.1" value="1.2">
+                </div>
+                <div class="control-group">
+                    <label>Letter Spacing <b id="lbl-space">0px</b></label>
+                    <input type="range" id="inp-space" min="-10" max="100" value="0">
+                </div>
+                <div class="control-group">
+                    <label>Font Weight</label>
+                    <div class="action-grid">
+                        <button class="btn-main" onclick="setStyle('fontWeight', '300')">Thin</button>
+                        <button class="btn-main" onclick="setStyle('fontWeight', '900')">Heavy</button>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label>Presets</label>
+                    <div class="action-grid">
+                        <button class="btn-main" onclick="setPreset('bn')">বাংলা বর্ণমালা</button>
+                        <button class="btn-main" onclick="setPreset('en')">English Mix</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tab 2: Style -->
+            <div id="style" class="tab-content">
+                <div class="control-group">
+                    <label>Text Color & Background</label>
+                    <div class="color-grid">
+                        <input type="color" id="inp-color" value="#000000" class="color-btn">
+                        <input type="color" id="inp-bg" value="#ffffff" class="color-btn">
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label>Text Shadow (Glow) <b id="lbl-glow">0px</b></label>
+                    <input type="range" id="inp-glow" min="0" max="50" value="0">
+                </div>
+                <div class="control-group">
+                    <label>Artboard Radius <b id="lbl-radius">20px</b></label>
+                    <input type="range" id="inp-radius" min="0" max="200" value="20">
+                </div>
+                <div class="control-group">
+                    <label>Gradient Text</label>
+                    <button class="btn-main" style="width:100%" onclick="applyGradient()">Apply Neon Gradient</button>
+                </div>
+            </div>
+
+            <!-- Tab 3: Export -->
+            <div id="export" class="tab-content">
+                <h4 style="margin-bottom: 15px; color: var(--secondary);">Download Your Work</h4>
+                <p style="font-size: 0.75rem; color: #94a3b8; margin-bottom: 20px;">আপনার ডিজাইনটি হাই-কোয়ালিটি ইমেজে এক্সপোর্ট করুন।</p>
+                
+                <button class="btn-main btn-export" style="width:100%; height: 55px;" onclick="exportCanvas('png')">DOWNLOAD PNG (ULTRA HD)</button>
+                <button class="btn-main" style="width:100%; margin-top: 10px;" onclick="exportCanvas('jpg')">DOWNLOAD JPG</button>
+                
+                <div style="margin-top: 30px; padding: 15px; background: rgba(0,0,0,0.3); border-radius: 10px; font-size: 0.7rem;">
+                    <b>Pro Tip:</b> বড় ইমেজের জন্য ব্রাউজার জুম ১০০% রাখুন।
+                </div>
+                <button class="btn-main" style="width:100%; margin-top: 40px; color: #f87171;" onclick="location.reload()">Reset Engine</button>
+            </div>
         </div>
     </div>
 
-    <!-- Mobile Nav Toggle -->
-    <div class="mobile-nav" onclick="toggleMobileSidebar()">
-        SETTINGS / CONTROLS
-    </div>
+    <!-- Mobile Button -->
+    <button class="mobile-fab" onclick="toggleSidebar()">⚙️</button>
 
     <script>
-        const fInp = document.getElementById('fInp');
-        const captureArea = document.getElementById('capture-area');
-        const sidebar = document.getElementById('sidebar');
+        // --- 1. Font Import System (The Core) ---
+        const fontFile = document.getElementById('fontFile');
+        const artboard = document.getElementById('artboard');
+        const welcome = document.getElementById('welcome-screen');
 
-        // Font Loading Logic
-        fInp.addEventListener('change', function(e) {
+        fontFile.addEventListener('change', function(e) {
             const file = e.target.files[0];
             if (file) {
                 const reader = new FileReader();
                 reader.onload = function(event) {
-                    const fontFace = new FontFace('UserFont', event.target.result);
-                    fontFace.load().then(loaded => {
-                        document.fonts.add(loaded);
-                        captureArea.style.fontFamily = 'UserFont';
-                        document.getElementById('font-name-display').innerText = file.name;
-                        document.getElementById('upload-screen').style.opacity = '0';
-                        setTimeout(() => {
-                            document.getElementById('upload-screen').style.display = 'none';
-                        }, 500);
-                    });
+                    const fontName = 'DUModzFont_' + Math.floor(Math.random() * 1000);
+                    const fontFace = new FontFace(fontName, event.target.result);
+                    
+                    fontFace.load().then(loadedFace => {
+                        document.fonts.add(loadedFace);
+                        artboard.style.fontFamily = fontName;
+                        document.getElementById('fontBadge').innerText = file.name;
+                        document.getElementById('fontBadge').style.display = 'block';
+                        
+                        // Smooth Transition
+                        welcome.style.transform = 'translateY(-100%)';
+                        setTimeout(() => welcome.style.display = 'none', 600);
+                    }).catch(err => alert("ফন্ট ফাইলটি সঠিক নয়!"));
                 };
                 reader.readAsArrayBuffer(file);
             }
         });
 
-        // Dynamic Controls Logic
-        function updateStyle(id, prop, unit = '') {
-            const el = document.getElementById(id);
-            const label = document.getElementById(id.replace('Inp', 'L'));
-            el.addEventListener('input', (e) => {
-                captureArea.style[prop] = e.target.value + unit;
-                if(label) label.innerText = e.target.value + unit;
+        // --- 2. Live Control Engine ---
+        function sync(inputId, property, unit, labelId) {
+            const input = document.getElementById(inputId);
+            const label = document.getElementById(labelId);
+            input.addEventListener('input', () => {
+                const val = input.value;
+                if(property === 'textShadow') {
+                    artboard.style.textShadow = `0 5px ${val}px rgba(0,0,0,0.2)`;
+                } else {
+                    artboard.style[property] = val + unit;
+                }
+                label.innerText = val + unit;
             });
         }
 
-        updateStyle('szInp', 'fontSize', 'px');
-        updateStyle('lhInp', 'lineHeight', '');
-        updateStyle('lsInp', 'letterSpacing', 'px');
+        sync('inp-size', 'fontSize', 'px', 'lbl-size');
+        sync('inp-height', 'lineHeight', '', 'lbl-height');
+        sync('inp-space', 'letterSpacing', 'px', 'lbl-space');
+        sync('inp-glow', 'textShadow', 'px', 'lbl-glow');
+        sync('inp-radius', 'borderRadius', 'px', 'lbl-radius');
 
-        document.getElementById('fgCol').addEventListener('input', (e) => {
-            captureArea.style.color = e.target.value;
+        // Color Sync
+        document.getElementById('inp-color').addEventListener('input', (e) => {
+            artboard.style.color = e.target.value;
+            artboard.style.webkitTextFillColor = e.target.value; // Reset gradient if color changed
         });
+        document.getElementById('inp-bg').addEventListener('input', (e) => artboard.style.background = e.target.value);
 
-        document.getElementById('bgCol').addEventListener('input', (e) => {
-            captureArea.style.background = e.target.value;
-        });
-
-        // Presets
-        function setPreset(lang) {
-            if(lang === 'bn') {
-                captureArea.innerText = "আমার সোনার বাংলা, আমি তোমায় ভালোবাসি। চিরদিন তোমার আকাশ, তোমার বাতাস, আমার প্রাণে বাজায় বাঁশি।";
-            } else {
-                captureArea.innerText = "The quick brown fox jumps over the lazy dog. 1234567890 !@#$%^&*()";
-            }
+        // --- 3. UI Functionality ---
+        function openTab(evt, tabName) {
+            const contents = document.getElementsByClassName("tab-content");
+            for (let x of contents) x.classList.remove("active");
+            const tabs = document.getElementsByClassName("tab");
+            for (let x of tabs) x.classList.remove("active");
+            document.getElementById(tabName).classList.add("active");
+            evt.currentTarget.classList.add("active");
         }
 
-        // Image Export Logic (html2canvas)
-        function exportImg(format) {
-            html2canvas(captureArea, {
-                backgroundColor: captureArea.style.background || "#ffffff",
-                scale: 2 // High Quality
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('open');
+            document.getElementById('overlay').classList.toggle('active');
+        }
+
+        function setStyle(prop, val) { artboard.style[prop] = val; }
+
+        function setPreset(lang) {
+            if(lang === 'bn') artboard.innerText = "অ আ ই ঈ উ ঊ ঋ এ ঐ ও ঔ\nক খ গ ঘ ঙ চ ছ জ ঝ ঞ";
+            else artboard.innerText = "Modern DUModz Engine\nAa Bb Cc 12345 &@#";
+        }
+
+        function applyGradient() {
+            artboard.style.background = "none";
+            artboard.style.backgroundImage = "linear-gradient(45deg, #a855f7, #22d3ee)";
+            artboard.style.webkitBackgroundClip = "text";
+            artboard.style.webkitTextFillColor = "transparent";
+        }
+
+        // --- 4. Export Engine (Bug Fixed) ---
+        function exportCanvas(format) {
+            artboard.style.border = "none";
+            html2canvas(artboard, {
+                scale: 4, // High Resolution
+                useCORS: true,
+                backgroundColor: artboard.style.backgroundColor || "#ffffff"
             }).then(canvas => {
                 const link = document.createElement('a');
-                link.download = `DUModz-Font-Export.${format}`;
-                link.href = canvas.toDataURL(`image/${format === 'jpg' ? 'jpeg' : 'png'}`);
+                link.download = `DUModz_Export_${Date.now()}.${format}`;
+                link.href = canvas.toDataURL(`image/${format === 'jpg' ? 'jpeg' : 'png'}`, 1.0);
                 link.click();
             });
-        }
-
-        // Mobile Toggle
-        let sidebarOpen = false;
-        function toggleMobileSidebar() {
-            sidebarOpen = !sidebarOpen;
-            sidebar.classList.toggle('active', sidebarOpen);
-            document.querySelector('.mobile-nav').innerText = sidebarOpen ? "CLOSE SETTINGS" : "SETTINGS / CONTROLS";
         }
     </script>
 </body>
