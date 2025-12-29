@@ -3,87 +3,266 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>DUModz Font Viewer - Ultra Advanced</title>
+    <title>DUModz Font Viewer - Ultra Advanced Professional</title>
     
     <!-- Libraries -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=Hind+Siliguri:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
     <style>
         :root {
-            --primary: #c084fc;
-            --secondary: #22d3ee;
-            --accent: #fbbf24;
-            --bg-dark: #020617;
-            --panel-bg: rgba(15, 23, 42, 0.9);
-            --glass: rgba(255, 255, 255, 0.05);
-            --border: rgba(255, 255, 255, 0.1);
+            --primary: #8b5cf6;
+            --primary-dark: #7c3aed;
+            --secondary: #06b6d4;
+            --secondary-dark: #0891b2;
+            --accent: #f59e0b;
+            --accent-dark: #d97706;
+            --success: #10b981;
+            --danger: #ef4444;
+            --bg-dark: #0f172a;
+            --bg-darker: #020617;
+            --panel-bg: rgba(30, 41, 59, 0.95);
+            --glass: rgba(255, 255, 255, 0.08);
+            --glass-light: rgba(255, 255, 255, 0.12);
+            --border: rgba(255, 255, 255, 0.15);
+            --text-primary: #f8fafc;
+            --text-secondary: #cbd5e1;
+            --text-muted: #94a3b8;
+            --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 10px 10px -5px rgba(0, 0, 0, 0.3);
+            --shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', 'Hind Siliguri', sans-serif; }
+        * { 
+            margin: 0; 
+            padding: 0; 
+            box-sizing: border-box; 
+            font-family: 'Inter', 'Hind Siliguri', sans-serif; 
+        }
 
         body {
             background-color: var(--bg-dark);
-            background-image: radial-gradient(at 0% 0%, hsla(253,16%,7%,1) 0, transparent 50%), 
-                              radial-gradient(at 50% 0%, hsla(225,39%,30%,1) 0, transparent 50%);
-            color: #fff;
+            background-image: 
+                radial-gradient(at 0% 0%, hsla(253, 16%, 7%, 1) 0, transparent 70%), 
+                radial-gradient(at 70% 0%, hsla(225, 39%, 20%, 0.7) 0, transparent 50%),
+                radial-gradient(at 30% 100%, hsla(262, 80%, 20%, 0.5) 0, transparent 50%);
+            color: var(--text-primary);
             height: 100vh;
             display: flex;
             flex-direction: column;
             overflow: hidden;
+            position: relative;
         }
 
-        /* --- 100% Perfect Loading Screen --- */
+        /* Animated Background Particles */
+        .particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .particle {
+            position: absolute;
+            background: rgba(139, 92, 246, 0.2);
+            border-radius: 50%;
+            animation: float 15s infinite linear;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0) translateX(0); }
+            25% { transform: translateY(-20px) translateX(20px); }
+            50% { transform: translateY(-40px) translateX(0); }
+            75% { transform: translateY(-20px) translateX(-20px); }
+            100% { transform: translateY(0) translateX(0); }
+        }
+
+        /* --- Welcome Screen --- */
         #welcome-screen {
             position: fixed;
             inset: 0;
             z-index: 9999;
-            background: #020617;
+            background: var(--bg-darker);
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            transition: 0.6s cubic-bezier(0.7, 0, 0.3, 1);
+            transition: transform 0.8s cubic-bezier(0.87, 0, 0.13, 1), opacity 0.8s ease;
+        }
+
+        .logo-container {
+            text-align: center;
+            margin-bottom: 2rem;
         }
 
         .logo-anim {
-            font-size: 3.5rem;
+            font-size: 4rem;
             font-weight: 900;
-            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            background: linear-gradient(45deg, var(--primary), var(--secondary), var(--accent));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            filter: drop-shadow(0 0 15px rgba(192, 132, 252, 0.4));
-            animation: pulse 2s infinite;
+            background-clip: text;
+            filter: drop-shadow(0 0 20px rgba(139, 92, 246, 0.4));
+            animation: glow 3s ease-in-out infinite alternate;
+            margin-bottom: 0.5rem;
         }
 
-        @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
+        @keyframes glow {
+            0% { filter: drop-shadow(0 0 10px rgba(139, 92, 246, 0.4)); }
+            100% { filter: drop-shadow(0 0 25px rgba(6, 182, 212, 0.6)); }
+        }
+
+        .logo-subtitle {
+            font-size: 1rem;
+            color: var(--text-secondary);
+            letter-spacing: 0.5rem;
+            opacity: 0.7;
+        }
+
+        .upload-area {
+            width: 90%;
+            max-width: 600px;
+            height: 300px;
+            border: 3px dashed var(--border);
+            border-radius: 25px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            margin: 2rem 0;
+            background: var(--glass);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .upload-area:hover {
+            border-color: var(--primary);
+            background: rgba(30, 41, 59, 0.7);
+            transform: translateY(-5px);
+        }
+
+        .upload-area i {
+            font-size: 5rem;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            opacity: 0.8;
+        }
+
+        .upload-text {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        .upload-subtext {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+        }
 
         .upload-btn {
-            margin-top: 30px;
-            padding: 15px 40px;
-            background: linear-gradient(45deg, #6366f1, #a855f7);
+            padding: 15px 50px;
+            background: linear-gradient(45deg, var(--primary), var(--primary-dark));
             border: none;
             border-radius: 50px;
             color: white;
-            font-weight: bold;
+            font-weight: 700;
+            font-size: 1rem;
             cursor: pointer;
             box-shadow: 0 10px 20px rgba(99, 102, 241, 0.3);
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .upload-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(99, 102, 241, 0.4);
+        }
+
+        .file-info {
+            margin-top: 1.5rem;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            text-align: center;
+            max-width: 500px;
+            line-height: 1.5;
         }
 
         /* --- Header --- */
         header {
             padding: 15px 25px;
             background: var(--panel-bg);
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(15px);
             border-bottom: 1px solid var(--border);
             display: flex;
             justify-content: space-between;
             align-items: center;
             z-index: 100;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
         }
 
-        .header-brand { font-weight: 900; font-size: 1.5rem; letter-spacing: -1px; }
-        .header-brand span { color: var(--secondary); }
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .header-brand {
+            font-weight: 900;
+            font-size: 1.5rem;
+            letter-spacing: -0.5px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .header-brand span {
+            color: var(--secondary);
+        }
+
+        .header-stats {
+            display: flex;
+            gap: 20px;
+            font-size: 0.8rem;
+        }
+
+        .stat-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            color: var(--text-secondary);
+        }
+
+        .stat-item i {
+            color: var(--primary);
+        }
+
+        #fontBadge {
+            font-size: 0.75rem;
+            background: var(--glass);
+            padding: 8px 16px;
+            border-radius: 50px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border: 1px solid var(--border);
+            max-width: 250px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        #fontBadge i {
+            color: var(--accent);
+        }
 
         /* --- Main Layout --- */
         .app-container {
@@ -99,9 +278,19 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 40px;
+            padding: 30px;
             overflow: auto;
-            background: url('https://www.transparenttextures.com/patterns/carbon-fibre.png');
+            position: relative;
+        }
+
+        .editor-bg {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(circle at 15% 50%, rgba(30, 41, 59, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 85% 30%, rgba(139, 92, 246, 0.1) 0%, transparent 50%);
+            z-index: -1;
         }
 
         #artboard {
@@ -111,330 +300,1510 @@
             min-height: 400px;
             background: #ffffff;
             color: #000;
-            border-radius: 20px;
-            padding: 60px 40px;
+            border-radius: 25px;
+            padding: 70px 50px;
             font-size: 50px;
             outline: none;
-            box-shadow: 0 40px 100px rgba(0,0,0,0.8);
+            box-shadow: var(--shadow-2xl);
             position: relative;
             word-wrap: break-word;
-            transition: all 0.3s ease;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             display: flex;
             align-items: center;
             justify-content: center;
             text-align: center;
+            overflow: hidden;
+            resize: both;
+            max-height: 80vh;
+        }
+
+        #artboard:after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            border-radius: 25px 25px 0 0;
+        }
+
+        .artboard-controls {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            display: flex;
+            gap: 10px;
+            z-index: 10;
+        }
+
+        .artboard-btn {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.9);
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+            transition: all 0.2s ease;
+            color: #333;
+            font-size: 0.9rem;
+        }
+
+        .artboard-btn:hover {
+            background: white;
+            transform: scale(1.1);
         }
 
         /* --- Sidebar Controls --- */
         .controls-panel {
-            width: 380px;
+            width: 400px;
             background: var(--panel-bg);
-            backdrop-filter: blur(20px);
+            backdrop-filter: blur(25px);
             border-left: 1px solid var(--border);
             display: flex;
             flex-direction: column;
             z-index: 200;
-            transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: -10px 0 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .panel-header {
+            padding: 20px 25px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .panel-header h3 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .panel-header h3 i {
+            color: var(--secondary);
+        }
+
+        .close-sidebar {
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            background: var(--glass);
+            border: none;
+            color: var(--text-primary);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+
+        .close-sidebar:hover {
+            background: var(--glass-light);
         }
 
         /* --- Tabs --- */
         .tabs {
             display: flex;
-            background: rgba(0,0,0,0.3);
+            background: rgba(0, 0, 0, 0.2);
             border-bottom: 1px solid var(--border);
         }
 
         .tab {
             flex: 1;
-            padding: 15px;
+            padding: 18px 5px;
             text-align: center;
-            font-size: 0.8rem;
-            font-weight: bold;
+            font-size: 0.85rem;
+            font-weight: 600;
             cursor: pointer;
-            opacity: 0.5;
-            transition: 0.3s;
+            opacity: 0.7;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+            border-bottom: 3px solid transparent;
         }
 
-        .tab.active { opacity: 1; border-bottom: 2px solid var(--secondary); background: var(--glass); }
+        .tab i {
+            font-size: 1.1rem;
+            margin-bottom: 3px;
+        }
 
-        .tab-content { padding: 25px; overflow-y: auto; flex: 1; display: none; }
-        .tab-content.active { display: block; }
+        .tab.active { 
+            opacity: 1; 
+            border-bottom: 3px solid var(--secondary); 
+            background: rgba(6, 182, 212, 0.05);
+        }
+
+        .tab-content { 
+            padding: 25px; 
+            overflow-y: auto; 
+            flex: 1; 
+            display: none; 
+        }
+        
+        .tab-content.active { 
+            display: block; 
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
 
         /* --- UI Elements --- */
-        .control-group { margin-bottom: 20px; }
-        .control-group label { display: flex; justify-content: space-between; font-size: 0.8rem; color: #94a3b8; margin-bottom: 10px; }
-        
-        input[type="range"] { width: 100%; height: 5px; accent-color: var(--secondary); }
-        
-        .color-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
-        .color-btn { 
-            height: 45px; width: 100%; border-radius: 10px; border: 1px solid var(--border); 
-            background: var(--glass); cursor: pointer; display: flex; align-items: center; justify-content: center;
+        .control-group { 
+            margin-bottom: 25px; 
+            background: var(--glass);
+            padding: 18px;
+            border-radius: 15px;
+            border: 1px solid var(--border);
+            transition: all 0.2s ease;
         }
 
-        .action-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-        .btn-main {
-            padding: 12px; border-radius: 10px; border: none; background: var(--glass);
-            color: white; cursor: pointer; font-weight: bold; transition: 0.3s; font-size: 0.8rem;
+        .control-group:hover {
+            border-color: rgba(139, 92, 246, 0.3);
         }
-        .btn-main:hover { background: var(--primary); transform: translateY(-2px); }
-        .btn-export { background: linear-gradient(45deg, var(--primary), var(--secondary)); margin-top: 10px; }
+
+        .control-group label { 
+            display: flex; 
+            justify-content: space-between; 
+            font-size: 0.85rem; 
+            color: var(--text-secondary); 
+            margin-bottom: 12px; 
+            font-weight: 600;
+        }
+
+        .control-group label b { 
+            color: var(--text-primary); 
+            font-weight: 700;
+        }
+        
+        input[type="range"] { 
+            width: 100%; 
+            height: 6px; 
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            outline: none;
+            -webkit-appearance: none;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--secondary);
+            cursor: pointer;
+            box-shadow: 0 0 10px rgba(6, 182, 212, 0.5);
+            border: 2px solid white;
+        }
+
+        input[type="range"]::-moz-range-thumb {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--secondary);
+            cursor: pointer;
+            box-shadow: 0 0 10px rgba(6, 182, 212, 0.5);
+            border: 2px solid white;
+        }
+
+        .color-grid { 
+            display: grid; 
+            grid-template-columns: repeat(2, 1fr); 
+            gap: 12px; 
+        }
+        
+        .color-btn { 
+            height: 50px; 
+            width: 100%; 
+            border-radius: 12px; 
+            border: 2px solid var(--border); 
+            background: var(--glass); 
+            cursor: pointer; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center;
+            transition: all 0.2s ease;
+            overflow: hidden;
+        }
+
+        .color-btn:hover {
+            transform: translateY(-3px);
+            border-color: var(--primary);
+        }
+
+        .color-btn input[type="color"] {
+            width: 100%;
+            height: 100%;
+            border: none;
+            background: transparent;
+            cursor: pointer;
+        }
+
+        .action-grid { 
+            display: grid; 
+            grid-template-columns: repeat(2, 1fr); 
+            gap: 12px; 
+        }
+        
+        .btn-main {
+            padding: 14px; 
+            border-radius: 12px; 
+            border: 1px solid var(--border); 
+            background: var(--glass); 
+            color: var(--text-primary); 
+            cursor: pointer; 
+            font-weight: 600; 
+            transition: all 0.3s ease; 
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        
+        .btn-main:hover { 
+            background: var(--primary); 
+            transform: translateY(-3px); 
+            box-shadow: 0 7px 15px rgba(139, 92, 246, 0.3);
+            border-color: var(--primary);
+        }
+        
+        .btn-export { 
+            background: linear-gradient(45deg, var(--primary), var(--secondary)); 
+            margin-top: 10px; 
+            border: none;
+        }
+
+        .btn-success {
+            background: linear-gradient(45deg, var(--success), #34d399);
+            border: none;
+        }
+
+        .btn-danger {
+            background: linear-gradient(45deg, var(--danger), #f87171);
+            border: none;
+        }
+
+        .preset-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+        }
+
+        .preset-btn {
+            padding: 12px 8px;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: all 0.2s ease;
+            text-align: center;
+        }
+
+        .preset-btn:hover {
+            background: rgba(139, 92, 246, 0.1);
+            border-color: var(--primary);
+            color: var(--text-primary);
+            transform: translateY(-2px);
+        }
+
+        .font-selector {
+            width: 100%;
+            padding: 12px 15px;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border);
+            color: var(--text-primary);
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+            cursor: pointer;
+        }
+
+        .font-selector:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .info-text {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-top: 10px;
+            line-height: 1.5;
+        }
 
         /* --- Mobile Responsiveness (768px) --- */
         @media (max-width: 768px) {
-            .app-container { flex-direction: column; }
+            .app-container { 
+                flex-direction: column; 
+            }
+            
             .controls-panel {
                 position: fixed;
                 bottom: 0;
                 left: 0;
                 width: 100%;
-                height: 60vh;
+                height: 70vh;
                 border-left: none;
                 border-top: 2px solid var(--secondary);
-                border-radius: 30px 30px 0 0;
+                border-radius: 25px 25px 0 0;
                 transform: translateY(100%);
+                z-index: 300;
             }
-            .controls-panel.open { transform: translateY(0); }
-            .editor-container { padding: 20px; padding-bottom: 100px; }
-            #artboard { font-size: 35px; padding: 40px 20px; min-height: 250px; }
             
+            .controls-panel.open { 
+                transform: translateY(0); 
+            }
+            
+            .editor-container { 
+                padding: 20px; 
+                padding-bottom: 100px; 
+            }
+            
+            #artboard { 
+                font-size: 35px; 
+                padding: 40px 25px; 
+                min-height: 300px;
+                max-height: 60vh;
+                resize: none;
+            }
+
+            .header-stats {
+                display: none;
+            }
+
+            #fontBadge {
+                max-width: 150px;
+                font-size: 0.7rem;
+                padding: 6px 12px;
+            }
+
+            .upload-area {
+                height: 250px;
+            }
+
+            .logo-anim {
+                font-size: 3rem;
+            }
+
             .mobile-fab {
                 display: flex !important;
                 position: fixed;
-                bottom: 20px;
-                right: 20px;
-                width: 60px;
-                height: 60px;
-                background: var(--secondary);
+                bottom: 25px;
+                right: 25px;
+                width: 65px;
+                height: 65px;
+                background: linear-gradient(45deg, var(--primary), var(--secondary));
                 border-radius: 50%;
                 justify-content: center;
                 align-items: center;
-                box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
                 z-index: 1000;
                 border: none;
-                font-size: 1.5rem;
-                color: #000;
+                font-size: 1.8rem;
+                color: white;
+                cursor: pointer;
+                transition: all 0.3s ease;
             }
+
+            .mobile-fab:hover {
+                transform: scale(1.1) rotate(90deg);
+            }
+
             .sidebar-overlay {
-                display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.7); z-index: 150;
+                display: none; 
+                position: fixed; 
+                inset: 0; 
+                background: rgba(0, 0, 0, 0.7); 
+                z-index: 250;
+                backdrop-filter: blur(5px);
             }
-            .sidebar-overlay.active { display: block; }
+            
+            .sidebar-overlay.active { 
+                display: block; 
+            }
         }
 
-        .mobile-fab { display: none; }
+        @media (max-width: 480px) {
+            #artboard { 
+                font-size: 28px; 
+                padding: 30px 20px; 
+                min-height: 250px;
+            }
 
-        /* Scrollbar Fix */
-        ::-webkit-scrollbar { width: 5px; }
-        ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 10px; }
+            .upload-area {
+                height: 220px;
+            }
 
+            .logo-anim {
+                font-size: 2.5rem;
+            }
+
+            .tab-content {
+                padding: 20px 15px;
+            }
+        }
+
+        .mobile-fab { 
+            display: none; 
+        }
+
+        /* Notification */
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 25px;
+            background: var(--panel-bg);
+            border-left: 4px solid var(--success);
+            border-radius: 10px;
+            box-shadow: var(--shadow-xl);
+            z-index: 10000;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transform: translateX(150%);
+            transition: transform 0.4s ease;
+        }
+
+        .notification.show {
+            transform: translateX(0);
+        }
+
+        .notification i {
+            font-size: 1.2rem;
+            color: var(--success);
+        }
+
+        /* Scrollbar Styling */
+        ::-webkit-scrollbar { 
+            width: 8px; 
+        }
+        
+        ::-webkit-scrollbar-track { 
+            background: rgba(255, 255, 255, 0.05); 
+            border-radius: 10px;
+        }
+        
+        ::-webkit-scrollbar-thumb { 
+            background: var(--glass-light); 
+            border-radius: 10px; 
+        }
+        
+        ::-webkit-scrollbar-thumb:hover { 
+            background: var(--primary); 
+        }
+
+        /* Loading Animation */
+        .loader {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: var(--secondary);
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Export Options */
+        .export-options {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .export-option {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 15px 10px;
+            border-radius: 12px;
+            background: var(--glass);
+            border: 1px solid var(--border);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .export-option:hover {
+            background: rgba(139, 92, 246, 0.1);
+            border-color: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        .export-option i {
+            font-size: 1.8rem;
+            margin-bottom: 8px;
+            color: var(--secondary);
+        }
+
+        .export-option span {
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
     </style>
 </head>
 <body>
 
+    <!-- Animated Background Particles -->
+    <div class="particles" id="particles"></div>
+
     <!-- Loading/Upload Screen -->
     <div id="welcome-screen">
-        <div class="logo-anim">DUModz PRO</div>
-        <p style="opacity: 0.6; margin-top: 5px;">Modern Unicode Font Rendering Engine</p>
-        <button class="upload-btn" onclick="document.getElementById('fontFile').click()">CHOOSE FONT FILE</button>
-        <input type="file" id="fontFile" accept=".ttf,.otf,.woff" hidden>
+        <div class="logo-container">
+            <div class="logo-anim">DUModz PRO</div>
+            <div class="logo-subtitle">FONT VIEWER</div>
+        </div>
+        
+        <div class="upload-area" id="uploadArea" onclick="document.getElementById('fontFile').click()">
+            <i class="fas fa-cloud-upload-alt"></i>
+            <div class="upload-text">ফন্ট ফাইল আপলোড করুন</div>
+            <div class="upload-subtext">TTF, OTF বা WOFF ফাইল সাপোর্টেড</div>
+            <button class="upload-btn">
+                <i class="fas fa-folder-open"></i>
+                ব্রাউজ করুন
+            </button>
+        </div>
+        
+        <div class="file-info">
+            <i class="fas fa-info-circle"></i> 
+            আপনি সরাসরি ফন্ট ফাইল ড্র্যাগ এন্ড ড্রপও করতে পারেন। সর্বোচ্চ সাইজ: 10MB
+        </div>
+        
+        <input type="file" id="fontFile" accept=".ttf,.otf,.woff,.woff2" hidden>
+    </div>
+
+    <!-- Notification -->
+    <div class="notification" id="notification">
+        <i class="fas fa-check-circle"></i>
+        <div id="notification-text"></div>
     </div>
 
     <!-- App Header -->
     <header>
-        <div class="header-brand">DUModz <span>PREMIUM</span></div>
-        <div id="fontBadge" style="font-size: 0.7rem; background: var(--glass); padding: 5px 12px; border-radius: 20px; display: none;">No Font Loaded</div>
+        <div class="header-left">
+            <div class="header-brand">
+                <i class="fas fa-font"></i>
+                DUModz <span>PRO</span>
+            </div>
+            <div class="header-stats">
+                <div class="stat-item">
+                    <i class="fas fa-text-height"></i>
+                    <span id="fontSizeStat">50px</span>
+                </div>
+                <div class="stat-item">
+                    <i class="fas fa-palette"></i>
+                    <span id="colorStat">#000000</span>
+                </div>
+            </div>
+        </div>
+        <div id="fontBadge" style="display: none;">
+            <i class="fas fa-font"></i>
+            <span id="fontName">No Font Loaded</span>
+        </div>
     </header>
 
     <div class="app-container">
         <div class="sidebar-overlay" id="overlay" onclick="toggleSidebar()"></div>
+        
+        <div class="editor-bg"></div>
 
         <!-- Canvas Area -->
         <div class="editor-container">
             <div id="artboard" contenteditable="true" spellcheck="false">
                 DUModz Professional Engine
                 সব ফিচার ১০০% কার্যকরী।
+                বাংলা টাইপোগ্রাফি দেখুন।
+            </div>
+            
+            <div class="artboard-controls">
+                <button class="artboard-btn" title="Clear Text" onclick="clearText()">
+                    <i class="fas fa-trash-alt"></i>
+                </button>
+                <button class="artboard-btn" title="Center Text" onclick="alignText('center')">
+                    <i class="fas fa-align-center"></i>
+                </button>
+                <button class="artboard-btn" title="Reset Styles" onclick="resetStyles()">
+                    <i class="fas fa-redo-alt"></i>
+                </button>
             </div>
         </div>
 
         <!-- Controls Area -->
         <div class="controls-panel" id="sidebar">
+            <div class="panel-header">
+                <h3><i class="fas fa-sliders-h"></i> কন্ট্রোল প্যানেল</h3>
+                <button class="close-sidebar" onclick="toggleSidebar()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
             <div class="tabs">
-                <div class="tab active" onclick="openTab(event, 'typo')">TYPOGRAPHY</div>
-                <div class="tab" onclick="openTab(event, 'style')">STYLE & BG</div>
-                <div class="tab" onclick="openTab(event, 'export')">EXPORT</div>
+                <div class="tab active" onclick="openTab(event, 'typo')">
+                    <i class="fas fa-text-height"></i>
+                    টাইপোগ্রাফি
+                </div>
+                <div class="tab" onclick="openTab(event, 'style')">
+                    <i class="fas fa-palette"></i>
+                    স্টাইল
+                </div>
+                <div class="tab" onclick="openTab(event, 'export')">
+                    <i class="fas fa-download"></i>
+                    এক্সপোর্ট
+                </div>
             </div>
 
             <!-- Tab 1: Typography -->
             <div id="typo" class="tab-content active">
                 <div class="control-group">
-                    <label>Font Size <b id="lbl-size">50px</b></label>
-                    <input type="range" id="inp-size" min="10" max="300" value="50">
+                    <label>ফন্ট সাইজ <b id="lbl-size">50px</b></label>
+                    <input type="range" id="inp-size" min="10" max="200" value="50">
                 </div>
+                
                 <div class="control-group">
-                    <label>Line Height <b id="lbl-height">1.2</b></label>
+                    <label>লাইন হাইট <b id="lbl-height">1.2</b></label>
                     <input type="range" id="inp-height" min="0.5" max="3" step="0.1" value="1.2">
                 </div>
+                
                 <div class="control-group">
-                    <label>Letter Spacing <b id="lbl-space">0px</b></label>
-                    <input type="range" id="inp-space" min="-10" max="100" value="0">
+                    <label>লেটার স্পেসিং <b id="lbl-space">0px</b></label>
+                    <input type="range" id="inp-space" min="-5" max="50" value="0">
                 </div>
+                
                 <div class="control-group">
-                    <label>Font Weight</label>
+                    <label>ফন্ট স্টাইল</label>
                     <div class="action-grid">
-                        <button class="btn-main" onclick="setStyle('fontWeight', '300')">Thin</button>
-                        <button class="btn-main" onclick="setStyle('fontWeight', '900')">Heavy</button>
+                        <button class="btn-main" onclick="setStyle('fontWeight', '300')">
+                            <i class="fas fa-text-width"></i> পাতলা
+                        </button>
+                        <button class="btn-main" onclick="setStyle('fontWeight', '700')">
+                            <i class="fas fa-bold"></i> গাঢ়
+                        </button>
+                        <button class="btn-main" onclick="setStyle('fontStyle', 'italic')">
+                            <i class="fas fa-italic"></i> ইটালিক
+                        </button>
+                        <button class="btn-main" onclick="setStyle('textDecoration', 'underline')">
+                            <i class="fas fa-underline"></i> আন্ডারলাইন
+                        </button>
                     </div>
                 </div>
+                
                 <div class="control-group">
-                    <label>Presets</label>
+                    <label>টেক্সট অ্যালাইনমেন্ট</label>
                     <div class="action-grid">
-                        <button class="btn-main" onclick="setPreset('bn')">বাংলা বর্ণমালা</button>
-                        <button class="btn-main" onclick="setPreset('en')">English Mix</button>
+                        <button class="btn-main" onclick="alignText('left')">
+                            <i class="fas fa-align-left"></i> বাম
+                        </button>
+                        <button class="btn-main" onclick="alignText('center')">
+                            <i class="fas fa-align-center"></i> মাঝ
+                        </button>
+                        <button class="btn-main" onclick="alignText('right')">
+                            <i class="fas fa-align-right"></i> ডান
+                        </button>
+                        <button class="btn-main" onclick="alignText('justify')">
+                            <i class="fas fa-align-justify"></i> জাস্টিফাই
+                        </button>
                     </div>
+                </div>
+                
+                <div class="control-group">
+                    <label>প্রিসেট টেক্সট</label>
+                    <div class="preset-grid">
+                        <button class="preset-btn" onclick="setPreset('bn-alphabet')">বাংলা বর্ণমালা</button>
+                        <button class="preset-btn" onclick="setPreset('bn-sentence')">বাংলা বাক্য</button>
+                        <button class="preset-btn" onclick="setPreset('en-alphabet')">ইংরেজি বর্ণমালা</button>
+                        <button class="preset-btn" onclick="setPreset('en-sentence')">ইংরেজি বাক্য</button>
+                        <button class="preset-btn" onclick="setPreset('numbers')">সংখ্যা ও চিহ্ন</button>
+                        <button class="preset-btn" onclick="setPreset('mix')">মিক্সড টেক্সট</button>
+                    </div>
+                </div>
+                
+                <div class="control-group">
+                    <label>সিস্টেম ফন্ট</label>
+                    <select class="font-selector" id="systemFonts" onchange="applySystemFont(this.value)">
+                        <option value="">কাস্টম ফন্ট</option>
+                        <option value="'Hind Siliguri', sans-serif">হিন্দ সিলিগুড়ি</option>
+                        <option value="'Kalpurush', sans-serif">কালপুরুষ</option>
+                        <option value="'SolaimanLipi', sans-serif">সোলায়মান লিপি</option>
+                        <option value="'Arial', sans-serif">এরিয়াল</option>
+                        <option value="'Times New Roman', serif">টাইমস নিউ রোমান</option>
+                        <option value="'Courier New', monospace">কুরিয়ার নিউ</option>
+                        <option value="'Georgia', serif">জর্জিয়া</option>
+                    </select>
+                    <div class="info-text">কাস্টম ফন্ট লোড করলে সিস্টেম ফন্ট অটোমেটিক ডিজেবল হবে</div>
                 </div>
             </div>
 
             <!-- Tab 2: Style -->
             <div id="style" class="tab-content">
                 <div class="control-group">
-                    <label>Text Color & Background</label>
+                    <label>টেক্সট কালার ও ব্যাকগ্রাউন্ড</label>
                     <div class="color-grid">
-                        <input type="color" id="inp-color" value="#000000" class="color-btn">
-                        <input type="color" id="inp-bg" value="#ffffff" class="color-btn">
+                        <div class="color-btn">
+                            <input type="color" id="inp-color" value="#000000">
+                        </div>
+                        <div class="color-btn">
+                            <input type="color" id="inp-bg" value="#ffffff">
+                        </div>
+                    </div>
+                    <div class="info-text">বামে টেক্সট কালার, ডানে ব্যাকগ্রাউন্ড কালার</div>
+                </div>
+                
+                <div class="control-group">
+                    <label>টেক্সট শ্যাডো (গ্লো) <b id="lbl-glow">0px</b></label>
+                    <input type="range" id="inp-glow" min="0" max="50" value="0">
+                    <div class="info-text">শ্যাডো টেক্সটের নিচে গ্লো ইফেক্ট তৈরি করে</div>
+                </div>
+                
+                <div class="control-group">
+                    <label>আর্টবোর্ড রেডিয়াস <b id="lbl-radius">25px</b></label>
+                    <input type="range" id="inp-radius" min="0" max="200" value="25">
+                </div>
+                
+                <div class="control-group">
+                    <label>গ্রেডিয়েন্ট টেক্সট</label>
+                    <div class="action-grid">
+                        <button class="btn-main" onclick="applyGradient('primary')">
+                            <i class="fas fa-fill-drip"></i> প্রাইমারি
+                        </button>
+                        <button class="btn-main" onclick="applyGradient('rainbow')">
+                            <i class="fas fa-rainbow"></i> রেইনবো
+                        </button>
+                        <button class="btn-main" onclick="applyGradient('fire')">
+                            <i class="fas fa-fire"></i> ফায়ার
+                        </button>
+                        <button class="btn-main" onclick="applyGradient('ocean')">
+                            <i class="fas fa-water"></i> ওশান
+                        </button>
                     </div>
                 </div>
+                
                 <div class="control-group">
-                    <label>Text Shadow (Glow) <b id="lbl-glow">0px</b></label>
-                    <input type="range" id="inp-glow" min="0" max="50" value="0">
+                    <label>প্যাটার্ন ব্যাকগ্রাউন্ড</label>
+                    <div class="action-grid">
+                        <button class="btn-main" onclick="setPattern('dots')">
+                            <i class="fas fa-circle"></i> ডটস
+                        </button>
+                        <button class="btn-main" onclick="setPattern('lines')">
+                            <i class="fas fa-grip-lines"></i> লাইনস
+                        </button>
+                        <button class="btn-main" onclick="setPattern('grid')">
+                            <i class="fas fa-th"></i> গ্রিড
+                        </button>
+                        <button class="btn-main" onclick="setPattern('none')">
+                            <i class="fas fa-times"></i> নন
+                        </button>
+                    </div>
                 </div>
+                
                 <div class="control-group">
-                    <label>Artboard Radius <b id="lbl-radius">20px</b></label>
-                    <input type="range" id="inp-radius" min="0" max="200" value="20">
+                    <label>বর্ডার স্টাইল</label>
+                    <div class="action-grid">
+                        <button class="btn-main" onclick="setBorder('solid')">
+                            <i class="fas fa-square"></i> সলিড
+                        </button>
+                        <button class="btn-main" onclick="setBorder('dashed')">
+                            <i class="fas fa-square"></i> ড্যাশড
+                        </button>
+                        <button class="btn-main" onclick="setBorder('dotted')">
+                            <i class="fas fa-circle"></i> ডটেড
+                        </button>
+                        <button class="btn-main" onclick="setBorder('none')">
+                            <i class="fas fa-times"></i> নন
+                        </button>
+                    </div>
                 </div>
+                
                 <div class="control-group">
-                    <label>Gradient Text</label>
-                    <button class="btn-main" style="width:100%" onclick="applyGradient()">Apply Neon Gradient</button>
+                    <label>এডভান্সড ইফেক্ট</label>
+                    <div class="action-grid">
+                        <button class="btn-main" onclick="applyTextEffect('3d')">
+                            <i class="fas fa-cube"></i> 3D টেক্সট
+                        </button>
+                        <button class="btn-main" onclick="applyTextEffect('outline')">
+                            <i class="fas fa-border-style"></i> আউটলাইন
+                        </button>
+                        <button class="btn-main btn-danger" onclick="resetStyles()">
+                            <i class="fas fa-redo-alt"></i> রিসেট স্টাইল
+                        </button>
+                    </div>
                 </div>
             </div>
 
             <!-- Tab 3: Export -->
             <div id="export" class="tab-content">
-                <h4 style="margin-bottom: 15px; color: var(--secondary);">Download Your Work</h4>
-                <p style="font-size: 0.75rem; color: #94a3b8; margin-bottom: 20px;">আপনার ডিজাইনটি হাই-কোয়ালিটি ইমেজে এক্সপোর্ট করুন।</p>
+                <h4 style="margin-bottom: 20px; color: var(--secondary); display: flex; align-items: center; gap: 10px;">
+                    <i class="fas fa-file-export"></i> আপনার কাজ এক্সপোর্ট করুন
+                </h4>
                 
-                <button class="btn-main btn-export" style="width:100%; height: 55px;" onclick="exportCanvas('png')">DOWNLOAD PNG (ULTRA HD)</button>
-                <button class="btn-main" style="width:100%; margin-top: 10px;" onclick="exportCanvas('jpg')">DOWNLOAD JPG</button>
+                <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 25px; line-height: 1.5;">
+                    আপনার ডিজাইনটি হাই-কোয়ালিটি ইমেজে এক্সপোর্ট করুন। PNG ফরম্যাটে ট্রান্সপারেন্ট ব্যাকগ্রাউন্ড পাওয়া যাবে।
+                </p>
                 
-                <div style="margin-top: 30px; padding: 15px; background: rgba(0,0,0,0.3); border-radius: 10px; font-size: 0.7rem;">
-                    <b>Pro Tip:</b> বড় ইমেজের জন্য ব্রাউজার জুম ১০০% রাখুন।
+                <div class="export-options">
+                    <div class="export-option" onclick="exportCanvas('png')">
+                        <i class="fas fa-file-image"></i>
+                        <span>PNG (ট্রান্সপারেন্ট)</span>
+                    </div>
+                    <div class="export-option" onclick="exportCanvas('jpg')">
+                        <i class="fas fa-file-image"></i>
+                        <span>JPG (হাই কোয়ালিটি)</span>
+                    </div>
+                    <div class="export-option" onclick="exportCanvas('pdf')">
+                        <i class="fas fa-file-pdf"></i>
+                        <span>PDF ডকুমেন্ট</span>
+                    </div>
+                    <div class="export-option" onclick="copyToClipboard()">
+                        <i class="fas fa-copy"></i>
+                        <span>ক্লিপবোর্ডে কপি</span>
+                    </div>
                 </div>
-                <button class="btn-main" style="width:100%; margin-top: 40px; color: #f87171;" onclick="location.reload()">Reset Engine</button>
+                
+                <div class="control-group">
+                    <label>ইমেজ কোয়ালিটি <b id="lbl-quality">100%</b></label>
+                    <input type="range" id="inp-quality" min="10" max="100" value="100">
+                </div>
+                
+                <div class="control-group">
+                    <label>এক্সপোর্ট সাইজ</label>
+                    <div class="action-grid">
+                        <button class="btn-main" onclick="setExportSize(1)">
+                            <i class="fas fa-mobile-alt"></i> 1x
+                        </button>
+                        <button class="btn-main" onclick="setExportSize(2)">
+                            <i class="fas fa-tablet-alt"></i> 2x
+                        </button>
+                        <button class="btn-main" onclick="setExportSize(3)">
+                            <i class="fas fa-desktop"></i> 3x
+                        </button>
+                        <button class="btn-main" onclick="setExportSize(4)">
+                            <i class="fas fa-expand-alt"></i> 4x
+                        </button>
+                    </div>
+                </div>
+                
+                <button class="btn-main btn-success" style="width:100%; margin-top: 15px; padding: 16px;" onclick="exportCanvas('png')">
+                    <i class="fas fa-download"></i> PNG এক্সপোর্ট করুন (HD)
+                </button>
+                
+                <button class="btn-main btn-export" style="width:100%; margin-top: 10px;" onclick="exportCanvas('jpg')">
+                    <i class="fas fa-download"></i> JPG এক্সপোর্ট করুন
+                </button>
+                
+                <div style="margin-top: 30px; padding: 18px; background: rgba(0,0,0,0.2); border-radius: 12px; font-size: 0.75rem; border-left: 4px solid var(--accent);">
+                    <b><i class="fas fa-lightbulb"></i> প্রো টিপ:</b> সর্বোচ্চ কোয়ালিটির জন্য এক্সপোর্ট স্কেল 4x সিলেক্ট করুন এবং ব্রাউজার জুম 100% রাখুন।
+                </div>
+                
+                <button class="btn-main btn-danger" style="width:100%; margin-top: 25px;" onclick="location.reload()">
+                    <i class="fas fa-power-off"></i> সম্পূর্ণ রিসেট করুন
+                </button>
             </div>
         </div>
     </div>
 
     <!-- Mobile Button -->
-    <button class="mobile-fab" onclick="toggleSidebar()">⚙️</button>
+    <button class="mobile-fab" onclick="toggleSidebar()">
+        <i class="fas fa-sliders-h"></i>
+    </button>
 
     <script>
-        // --- 1. Font Import System (The Core) ---
+        // --- 1. Initialize Application ---
+        document.addEventListener('DOMContentLoaded', function() {
+            createParticles();
+            initializeControls();
+            setupDragAndDrop();
+            
+            // Show welcome screen initially
+            setTimeout(() => {
+                document.getElementById('welcome-screen').style.opacity = '1';
+            }, 100);
+        });
+
+        // --- 2. Particle Background System ---
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            const particleCount = window.innerWidth < 768 ? 20 : 50;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                
+                // Random properties
+                const size = Math.random() * 5 + 2;
+                const posX = Math.random() * 100;
+                const posY = Math.random() * 100;
+                const delay = Math.random() * 15;
+                const duration = Math.random() * 10 + 15;
+                const color = `rgba(${Math.floor(Math.random() * 100 + 155)}, ${Math.floor(Math.random() * 100 + 155)}, 255, ${Math.random() * 0.3 + 0.1})`;
+                
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                particle.style.left = `${posX}%`;
+                particle.style.top = `${posY}%`;
+                particle.style.background = color;
+                particle.style.animationDelay = `${delay}s`;
+                particle.style.animationDuration = `${duration}s`;
+                
+                particlesContainer.appendChild(particle);
+            }
+        }
+
+        // --- 3. Font Import System (Advanced with Drag & Drop) ---
         const fontFile = document.getElementById('fontFile');
         const artboard = document.getElementById('artboard');
         const welcome = document.getElementById('welcome-screen');
+        const uploadArea = document.getElementById('uploadArea');
+        let currentFontFamily = '';
+        let currentFontName = '';
 
+        // File input change event
         fontFile.addEventListener('change', function(e) {
             const file = e.target.files[0];
             if (file) {
-                const reader = new FileReader();
-                reader.onload = function(event) {
-                    const fontName = 'DUModzFont_' + Math.floor(Math.random() * 1000);
-                    const fontFace = new FontFace(fontName, event.target.result);
-                    
-                    fontFace.load().then(loadedFace => {
-                        document.fonts.add(loadedFace);
-                        artboard.style.fontFamily = fontName;
-                        document.getElementById('fontBadge').innerText = file.name;
-                        document.getElementById('fontBadge').style.display = 'block';
-                        
-                        // Smooth Transition
-                        welcome.style.transform = 'translateY(-100%)';
-                        setTimeout(() => welcome.style.display = 'none', 600);
-                    }).catch(err => alert("ফন্ট ফাইলটি সঠিক নয়!"));
-                };
-                reader.readAsArrayBuffer(file);
+                loadFontFile(file);
             }
         });
 
-        // --- 2. Live Control Engine ---
-        function sync(inputId, property, unit, labelId) {
-            const input = document.getElementById(inputId);
-            const label = document.getElementById(labelId);
-            input.addEventListener('input', () => {
-                const val = input.value;
-                if(property === 'textShadow') {
-                    artboard.style.textShadow = `0 5px ${val}px rgba(0,0,0,0.2)`;
+        // Drag and drop functionality
+        function setupDragAndDrop() {
+            uploadArea.addEventListener('dragover', function(e) {
+                e.preventDefault();
+                uploadArea.style.borderColor = 'var(--primary)';
+                uploadArea.style.transform = 'translateY(-10px)';
+            });
+
+            uploadArea.addEventListener('dragleave', function(e) {
+                e.preventDefault();
+                uploadArea.style.borderColor = 'var(--border)';
+                uploadArea.style.transform = 'translateY(0)';
+            });
+
+            uploadArea.addEventListener('drop', function(e) {
+                e.preventDefault();
+                uploadArea.style.borderColor = 'var(--border)';
+                uploadArea.style.transform = 'translateY(0)';
+                
+                const file = e.dataTransfer.files[0];
+                if (file && (file.type.includes('font') || file.name.match(/\.(ttf|otf|woff|woff2)$/i))) {
+                    loadFontFile(file);
                 } else {
-                    artboard.style[property] = val + unit;
+                    showNotification('শুধুমাত্র ফন্ট ফাইল (TTF, OTF, WOFF) ড্রপ করুন', 'error');
                 }
-                label.innerText = val + unit;
             });
         }
 
-        sync('inp-size', 'fontSize', 'px', 'lbl-size');
-        sync('inp-height', 'lineHeight', '', 'lbl-height');
-        sync('inp-space', 'letterSpacing', 'px', 'lbl-space');
-        sync('inp-glow', 'textShadow', 'px', 'lbl-glow');
-        sync('inp-radius', 'borderRadius', 'px', 'lbl-radius');
+        // Font loading function
+        function loadFontFile(file) {
+            if (file.size > 10 * 1024 * 1024) {
+                showNotification('ফাইলের সাইজ 10MB এর বেশি হতে পারবে না', 'error');
+                return;
+            }
 
-        // Color Sync
-        document.getElementById('inp-color').addEventListener('input', (e) => {
-            artboard.style.color = e.target.value;
-            artboard.style.webkitTextFillColor = e.target.value; // Reset gradient if color changed
-        });
-        document.getElementById('inp-bg').addEventListener('input', (e) => artboard.style.background = e.target.value);
+            const reader = new FileReader();
+            reader.onloadstart = function() {
+                showNotification('ফন্ট লোড হচ্ছে...', 'info');
+            };
+            
+            reader.onload = function(event) {
+                const fontName = 'DUModzFont_' + Date.now();
+                const fontFace = new FontFace(fontName, event.target.result);
+                
+                fontFace.load().then(loadedFace => {
+                    document.fonts.add(loadedFace);
+                    
+                    // Apply the font
+                    artboard.style.fontFamily = `"${fontName}", sans-serif`;
+                    currentFontFamily = fontName;
+                    currentFontName = file.name.replace(/\.[^/.]+$/, ""); // Remove extension
+                    
+                    // Update UI
+                    document.getElementById('fontName').innerText = currentFontName;
+                    document.getElementById('fontBadge').style.display = 'flex';
+                    document.getElementById('systemFonts').value = '';
+                    
+                    // Show success and hide welcome screen
+                    showNotification('ফন্ট সফলভাবে লোড হয়েছে!', 'success');
+                    
+                    // Smooth transition
+                    welcome.style.transform = 'translateY(-100%)';
+                    welcome.style.opacity = '0';
+                    setTimeout(() => welcome.style.display = 'none', 800);
+                    
+                    // Update stats
+                    updateStats();
+                    
+                }).catch(err => {
+                    console.error('Font loading error:', err);
+                    showNotification('ফন্ট ফাইলটি সঠিক নয় বা লোড করা যায়নি!', 'error');
+                });
+            };
+            
+            reader.onerror = function() {
+                showNotification('ফাইল পড়তে সমস্যা হয়েছে', 'error');
+            };
+            
+            reader.readAsArrayBuffer(file);
+        }
 
-        // --- 3. UI Functionality ---
+        // --- 4. Control System with Live Updates ---
+        function initializeControls() {
+            // Size control
+            syncControl('inp-size', 'fontSize', 'px', 'lbl-size', 'fontSizeStat');
+            syncControl('inp-height', 'lineHeight', '', 'lbl-height');
+            syncControl('inp-space', 'letterSpacing', 'px', 'lbl-space');
+            syncControl('inp-glow', 'textShadow', 'px', 'lbl-glow', null, true);
+            syncControl('inp-radius', 'borderRadius', 'px', 'lbl-radius');
+            syncControl('inp-quality', null, '%', 'lbl-quality', null, false, true);
+            
+            // Color controls
+            document.getElementById('inp-color').addEventListener('input', (e) => {
+                artboard.style.color = e.target.value;
+                artboard.style.webkitTextFillColor = e.target.value;
+                document.getElementById('colorStat').textContent = e.target.value.toUpperCase();
+                updateStats();
+            });
+            
+            document.getElementById('inp-bg').addEventListener('input', (e) => {
+                artboard.style.backgroundColor = e.target.value;
+                updateStats();
+            });
+            
+            // Initialize stats
+            updateStats();
+        }
+
+        function syncControl(inputId, property, unit, labelId, statId = null, isShadow = false, isQuality = false) {
+            const input = document.getElementById(inputId);
+            const label = document.getElementById(labelId);
+            
+            input.addEventListener('input', () => {
+                const val = input.value;
+                
+                if (isQuality) {
+                    // Quality control doesn't change artboard directly
+                    label.innerText = val + unit;
+                    return;
+                }
+                
+                if (isShadow) {
+                    const shadowColor = artboard.style.color || '#000000';
+                    const shadowOpacity = '0.3';
+                    artboard.style.textShadow = `0 5px ${val}px rgba(${hexToRgb(shadowColor)}, ${shadowOpacity})`;
+                } else {
+                    artboard.style[property] = val + unit;
+                }
+                
+                label.innerText = val + unit;
+                
+                // Update stat if provided
+                if (statId) {
+                    document.getElementById(statId).textContent = val + unit;
+                }
+                
+                updateStats();
+            });
+        }
+
+        function hexToRgb(hex) {
+            hex = hex.replace('#', '');
+            const r = parseInt(hex.substring(0, 2), 16);
+            const g = parseInt(hex.substring(2, 4), 16);
+            const b = parseInt(hex.substring(4, 6), 16);
+            return `${r}, ${g}, ${b}`;
+        }
+
+        function updateStats() {
+            // Update any additional stats here
+        }
+
+        // --- 5. UI Functionality ---
         function openTab(evt, tabName) {
             const contents = document.getElementsByClassName("tab-content");
             for (let x of contents) x.classList.remove("active");
+            
             const tabs = document.getElementsByClassName("tab");
             for (let x of tabs) x.classList.remove("active");
+            
             document.getElementById(tabName).classList.add("active");
             evt.currentTarget.classList.add("active");
         }
 
         function toggleSidebar() {
-            document.getElementById('sidebar').classList.toggle('open');
-            document.getElementById('overlay').classList.toggle('active');
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('overlay');
+            const isOpen = sidebar.classList.contains('open');
+            
+            if (isOpen) {
+                sidebar.classList.remove('open');
+                overlay.classList.remove('active');
+            } else {
+                sidebar.classList.add('open');
+                overlay.classList.add('active');
+            }
         }
 
-        function setStyle(prop, val) { artboard.style[prop] = val; }
-
-        function setPreset(lang) {
-            if(lang === 'bn') artboard.innerText = "অ আ ই ঈ উ ঊ ঋ এ ঐ ও ঔ\nক খ গ ঘ ঙ চ ছ জ ঝ ঞ";
-            else artboard.innerText = "Modern DUModz Engine\nAa Bb Cc 12345 &@#";
+        // --- 6. Text Styling Functions ---
+        function setStyle(prop, val) {
+            // Toggle functionality for some properties
+            if (prop === 'fontStyle' && artboard.style.fontStyle === 'italic') {
+                artboard.style.fontStyle = 'normal';
+            } else if (prop === 'textDecoration' && artboard.style.textDecoration === 'underline') {
+                artboard.style.textDecoration = 'none';
+            } else if (prop === 'fontWeight' && artboard.style.fontWeight === val) {
+                artboard.style.fontWeight = 'normal';
+            } else {
+                artboard.style[prop] = val;
+            }
+            updateStats();
         }
 
-        function applyGradient() {
-            artboard.style.background = "none";
-            artboard.style.backgroundImage = "linear-gradient(45deg, #a855f7, #22d3ee)";
-            artboard.style.webkitBackgroundClip = "text";
-            artboard.style.webkitTextFillColor = "transparent";
+        function alignText(alignment) {
+            artboard.style.textAlign = alignment;
         }
 
-        // --- 4. Export Engine (Bug Fixed) ---
+        function clearText() {
+            artboard.innerHTML = '';
+            artboard.focus();
+        }
+
+        function resetStyles() {
+            // Reset to defaults but keep custom font if loaded
+            const fontFamily = currentFontFamily ? `"${currentFontFamily}", sans-serif` : '';
+            
+            artboard.style.cssText = `
+                font-family: ${fontFamily};
+                font-size: 50px;
+                line-height: 1.2;
+                letter-spacing: 0px;
+                color: #000000;
+                backgroundColor: #ffffff;
+                textShadow: none;
+                borderRadius: 25px;
+                textAlign: center;
+                fontStyle: normal;
+                fontWeight: normal;
+                textDecoration: none;
+                border: none;
+                backgroundImage: none;
+                webkitTextFillColor: #000000;
+            `;
+            
+            // Reset inputs
+            document.getElementById('inp-size').value = 50;
+            document.getElementById('inp-height').value = 1.2;
+            document.getElementById('inp-space').value = 0;
+            document.getElementById('inp-glow').value = 0;
+            document.getElementById('inp-radius').value = 25;
+            document.getElementById('inp-color').value = '#000000';
+            document.getElementById('inp-bg').value = '#ffffff';
+            document.getElementById('inp-quality').value = 100;
+            
+            // Update labels
+            document.getElementById('lbl-size').textContent = '50px';
+            document.getElementById('lbl-height').textContent = '1.2';
+            document.getElementById('lbl-space').textContent = '0px';
+            document.getElementById('lbl-glow').textContent = '0px';
+            document.getElementById('lbl-radius').textContent = '25px';
+            document.getElementById('lbl-quality').textContent = '100%';
+            
+            showNotification('সমস্ত স্টাইল রিসেট করা হয়েছে', 'success');
+            updateStats();
+        }
+
+        function setPreset(type) {
+            const presets = {
+                'bn-alphabet': 'অ আ ই ঈ উ ঊ ঋ এ ঐ ও ঔ\nক খ গ ঘ ঙ চ ছ জ ঝ ঞ\nট ঠ ড ঢ ণ ত থ দ ধ ন\nপ ফ ব ভ ম য র ল শ\nষ স হ ড় ঢ় য় ৎ',
+                'bn-sentence': 'আমার সোনার বাংলা আমি তোমায় ভালবাসি।\nচিরদিন তোমার আকাশ তোমার বাতাস আমার প্রাণে বাজায় বাঁশি।',
+                'en-alphabet': 'ABCDEFGHIJKLMNOPQRSTUVWXYZ\nabcdefghijklmnopqrstuvwxyz',
+                'en-sentence': 'The quick brown fox jumps over the lazy dog.\nPack my box with five dozen liquor jugs.',
+                'numbers': '১২৩৪৫৬৭৮৯০ 1234567890\n!@#$%^&*()_+-=[]{}|;:,.<>?',
+                'mix': 'DUModz Professional Font Viewer\nবাংলা এবং English মিক্সড টেক্সট।\n123৪৫৬ সিক্যুয়েন্স দেখুন!'
+            };
+            
+            artboard.innerHTML = presets[type] || 'প্রিসেট টেক্সট লোড হয়েছে';
+            showNotification('প্রিসেট টেক্সট সিলেক্ট করা হয়েছে', 'info');
+        }
+
+        function applySystemFont(fontFamily) {
+            if (!fontFamily) return;
+            
+            // If a custom font is loaded, warn user
+            if (currentFontFamily) {
+                if (confirm('সিস্টেম ফন্ট এপ্লাই করলে কাস্টম ফন্ট রিমুভ হবে। আপনি কি নিশ্চিত?')) {
+                    currentFontFamily = '';
+                    currentFontName = '';
+                    document.getElementById('fontBadge').style.display = 'none';
+                    artboard.style.fontFamily = fontFamily;
+                    showNotification('সিস্টেম ফন্ট এপ্লাই করা হয়েছে', 'success');
+                } else {
+                    document.getElementById('systemFonts').value = '';
+                }
+            } else {
+                artboard.style.fontFamily = fontFamily;
+                showNotification('সিস্টেম ফন্ট এপ্লাই করা হয়েছে', 'success');
+            }
+        }
+
+        // --- 7. Advanced Styling Functions ---
+        function applyGradient(type) {
+            let gradient;
+            
+            switch(type) {
+                case 'primary':
+                    gradient = 'linear-gradient(45deg, var(--primary), var(--secondary))';
+                    break;
+                case 'rainbow':
+                    gradient = 'linear-gradient(45deg, #ff0000, #ff8800, #ffff00, #00ff00, #0088ff, #8800ff)';
+                    break;
+                case 'fire':
+                    gradient = 'linear-gradient(45deg, #ff6b00, #ffbb00, #ff3300)';
+                    break;
+                case 'ocean':
+                    gradient = 'linear-gradient(45deg, #0066ff, #00ccff, #00ffcc)';
+                    break;
+                default:
+                    gradient = 'linear-gradient(45deg, var(--primary), var(--secondary))';
+            }
+            
+            artboard.style.backgroundImage = gradient;
+            artboard.style.webkitBackgroundClip = 'text';
+            artboard.style.backgroundClip = 'text';
+            artboard.style.webkitTextFillColor = 'transparent';
+            artboard.style.color = 'transparent';
+            
+            showNotification('গ্রেডিয়েন্ট টেক্সট এপ্লাই করা হয়েছে', 'success');
+        }
+
+        function setPattern(type) {
+            const patterns = {
+                'dots': 'radial-gradient(circle, #cccccc 1px, transparent 1px)',
+                'lines': 'repeating-linear-gradient(0deg, transparent, transparent 5px, #f0f0f0 5px, #f0f0f0 10px)',
+                'grid': 'linear-gradient(to right, #f0f0f0 1px, transparent 1px), linear-gradient(to bottom, #f0f0f0 1px, transparent 1px)',
+                'none': 'none'
+            };
+            
+            if (type === 'none') {
+                artboard.style.backgroundImage = '';
+            } else {
+                artboard.style.backgroundImage = patterns[type];
+                artboard.style.backgroundSize = type === 'dots' ? '20px 20px' : 
+                                               type === 'lines' ? '100% 10px' : 
+                                               '20px 20px';
+            }
+            
+            showNotification(`প্যাটার্ন ${type === 'none' ? 'রিমুভ' : 'এপ্লাই'} করা হয়েছে`, 'success');
+        }
+
+        function setBorder(type) {
+            if (type === 'none') {
+                artboard.style.border = 'none';
+            } else {
+                artboard.style.border = `3px ${type} var(--primary)`;
+            }
+            showNotification(`বর্ডার স্টাইল ${type} এপ্লাই করা হয়েছে`, 'success');
+        }
+
+        function applyTextEffect(type) {
+            if (type === '3d') {
+                artboard.style.textShadow = '1px 1px 0 #aaa, 2px 2px 0 #999, 3px 3px 0 #888, 4px 4px 0 #777, 5px 5px 5px rgba(0,0,0,0.5)';
+                showNotification('3D টেক্সট ইফেক্ট এপ্লাই করা হয়েছে', 'success');
+            } else if (type === 'outline') {
+                const color = artboard.style.color || '#000000';
+                artboard.style.webkitTextStroke = `2px ${color}`;
+                artboard.style.webkitTextFillColor = 'transparent';
+                showNotification('আউটলাইন ইফেক্ট এপ্লাই করা হয়েছে', 'success');
+            }
+        }
+
+        // --- 8. Export Engine (Advanced with Transparency Support) ---
+        let exportScale = 2; // Default 2x scale
+
+        function setExportSize(scale) {
+            exportScale = scale;
+            showNotification(`এক্সপোর্ট সাইজ ${scale}x সেট করা হয়েছে`, 'info');
+        }
+
         function exportCanvas(format) {
-            artboard.style.border = "none";
-            html2canvas(artboard, {
-                scale: 4, // High Resolution
+            showNotification('ইমেজ জেনারেট করা হচ্ছে...', 'info');
+            
+            // Store original styles
+            const originalBorder = artboard.style.border;
+            const originalBoxShadow = artboard.style.boxShadow;
+            const originalTransform = artboard.style.transform;
+            
+            // Prepare for export
+            artboard.style.border = 'none';
+            artboard.style.boxShadow = 'none';
+            artboard.style.transform = 'none';
+            
+            // Get quality
+            const quality = document.getElementById('inp-quality').value / 100;
+            
+            // Create export options
+            const options = {
+                scale: exportScale,
                 useCORS: true,
-                backgroundColor: artboard.style.backgroundColor || "#ffffff"
-            }).then(canvas => {
+                backgroundColor: format === 'png' ? null : artboard.style.backgroundColor || '#ffffff',
+                logging: false,
+                allowTaint: true
+            };
+            
+            if (format === 'pdf') {
+                // For PDF, we'll actually create a PNG and then offer as PDF
+                format = 'png';
+                options.backgroundColor = artboard.style.backgroundColor || '#ffffff';
+            }
+            
+            html2canvas(artboard, options).then(canvas => {
+                // Restore original styles
+                artboard.style.border = originalBorder;
+                artboard.style.boxShadow = originalBoxShadow;
+                artboard.style.transform = originalTransform;
+                
                 const link = document.createElement('a');
-                link.download = `DUModz_Export_${Date.now()}.${format}`;
-                link.href = canvas.toDataURL(`image/${format === 'jpg' ? 'jpeg' : 'png'}`, 1.0);
+                let fileName = `DUModz_Export_${Date.now()}`;
+                
+                if (format === 'png') {
+                    link.download = `${fileName}.png`;
+                    link.href = canvas.toDataURL('image/png');
+                } else if (format === 'jpg') {
+                    link.download = `${fileName}.jpg`;
+                    link.href = canvas.toDataURL('image/jpeg', quality);
+                }
+                
                 link.click();
+                showNotification(`${format.toUpperCase()} ইমেজ ডাউনলোড শুরু হয়েছে!`, 'success');
+            }).catch(err => {
+                console.error('Export error:', err);
+                showNotification('এক্সপোর্ট করতে সমস্যা হয়েছে', 'error');
+                
+                // Restore original styles even on error
+                artboard.style.border = originalBorder;
+                artboard.style.boxShadow = originalBoxShadow;
+                artboard.style.transform = originalTransform;
             });
+        }
+
+        function copyToClipboard() {
+            html2canvas(artboard, {
+                scale: 1,
+                useCORS: true,
+                backgroundColor: null
+            }).then(canvas => {
+                canvas.toBlob(blob => {
+                    const item = new ClipboardItem({ 'image/png': blob });
+                    navigator.clipboard.write([item]).then(() => {
+                        showNotification('ইমেজ ক্লিপবোর্ডে কপি করা হয়েছে!', 'success');
+                    }).catch(err => {
+                        console.error('Clipboard error:', err);
+                        showNotification('ক্লিপবোর্ডে কপি করতে সমস্যা হয়েছে', 'error');
+                    });
+                });
+            });
+        }
+
+        // --- 9. Notification System ---
+        function showNotification(message, type = 'info') {
+            const notification = document.getElementById('notification');
+            const notificationText = document.getElementById('notification-text');
+            
+            // Set message
+            notificationText.textContent = message;
+            
+            // Set color based on type
+            if (type === 'success') {
+                notification.style.borderLeftColor = 'var(--success)';
+                notification.querySelector('i').className = 'fas fa-check-circle';
+                notification.querySelector('i').style.color = 'var(--success)';
+            } else if (type === 'error') {
+                notification.style.borderLeftColor = 'var(--danger)';
+                notification.querySelector('i').className = 'fas fa-exclamation-circle';
+                notification.querySelector('i').style.color = 'var(--danger)';
+            } else {
+                notification.style.borderLeftColor = 'var(--secondary)';
+                notification.querySelector('i').className = 'fas fa-info-circle';
+                notification.querySelector('i').style.color = 'var(--secondary)';
+            }
+            
+            // Show notification
+            notification.classList.add('show');
+            
+            // Auto hide after 3 seconds
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
+        }
+
+        // --- 10. Mobile Specific Functions ---
+        if (window.innerWidth <= 768) {
+            // Auto-close sidebar when clicking on content on mobile
+            document.addEventListener('click', function(e) {
+                const sidebar = document.getElementById('sidebar');
+                const overlay = document.getElementById('overlay');
+                const fab = document.querySelector('.mobile-fab');
+                
+                if (sidebar.classList.contains('open') && 
+                    !sidebar.contains(e.target) && 
+                    e.target !== fab && 
+                    !fab.contains(e.target)) {
+                    sidebar.classList.remove('open');
+                    overlay.classList.remove('active');
+                }
+            });
+        }
+
+        // --- 11. Additional Features ---
+        // Keyboard shortcuts
+        document.addEventListener('keydown', function(e) {
+            // Ctrl + S to save
+            if ((e.ctrlKey || e.metaKey) && e.key === 's') {
+                e.preventDefault();
+                exportCanvas('png');
+            }
+            
+            // Ctrl + R to reset
+            if ((e.ctrlKey || e.metaKey) && e.key === 'r') {
+                e.preventDefault();
+                resetStyles();
+            }
+            
+            // Escape to close sidebar on mobile
+            if (e.key === 'Escape') {
+                const sidebar = document.getElementById('sidebar');
+                if (sidebar.classList.contains('open')) {
+                    toggleSidebar();
+                }
+            }
+        });
+
+        // Auto-save text to localStorage
+        artboard.addEventListener('input', function() {
+            localStorage.setItem('duModzArtboardText', artboard.innerHTML);
+        });
+
+        // Load saved text on page load
+        const savedText = localStorage.getItem('duModzArtboardText');
+        if (savedText && savedText.trim() !== '') {
+            artboard.innerHTML = savedText;
         }
     </script>
 </body>
